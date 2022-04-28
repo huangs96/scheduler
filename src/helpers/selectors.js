@@ -3,7 +3,6 @@
 export function getAppointmentsForDay(state, dayName) {
 
   const day = state.days.find(day => day.name === dayName);
-  //if the matching day object is empty/false, return empty array
   if (!day) {
     return [];
   }

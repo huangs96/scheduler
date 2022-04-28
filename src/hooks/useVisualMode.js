@@ -1,39 +1,33 @@
 import { useState } from 'react';
 
 export default function useVisualMode(initial) {
-const [mode, setMode] = useState(initial); 
-const [history, setHistory] = useState ([initial]);
+  const [mode, setMode] = useState(initial);
+  const [history, setHistory] = useState([initial]);
 
-  function transition (newMode, replace = false) {
+  function transition(newMode, replace = false) {
 
     setMode(newMode)
-    setHistory((prev) => 
-    
-    replace ? [...prev.slice(0, prev.length-1), newMode] : [...prev, newMode] //slice starts at index 0 and cuts out last element, then replacing the last element with newMode
-    
-    );
-    // if (replace) {
-    //   return [...prev.slice(0, prev.length-1), newMode]
-    // }
+    setHistory((prev) =>
 
-    // return [...prev, newMode];
+      replace ? [...prev.slice(0, prev.length - 1), newMode] : [...prev, newMode]
+    );
   }
 
-  function back () {
-    
+  function back() {
+
     setHistory((prev) => {
       if (prev.length < 2) {
         return prev;
       }
 
-      let newHistory = prev.slice(0, prev.length-1);
-      setMode(newHistory[newHistory.length - 1]);  
+      let newHistory = prev.slice(0, prev.length - 1);
+      setMode(newHistory[newHistory.length - 1]);
 
-      return newHistory;    
+      return newHistory;
     });
-    
+
 
   }
 
   return { mode, transition, back }
-}
+};

@@ -8,10 +8,10 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: {}
-  }); 
+  });
 
   //return Day state
-  const setDay = day => { return setState ({...state, day}) };
+  const setDay = day => { return setState({ ...state, day }) };
 
 
 
@@ -21,9 +21,9 @@ export default function useApplicationData() {
     const isEditingAppointment = !!state.appointments[id].interview
     const appointment = {
       ...state.appointments[id],
-      interview: {...interview}
+      interview: { ...interview }
     };
-    
+
     const appointments = {
       ...state.appointments,
       [id]: appointment
@@ -32,11 +32,11 @@ export default function useApplicationData() {
     //count spots remaining
 
     const apiUrl = `/api/appointments/${id}`;
-    return Axios.put (apiUrl, {interview}).then(() => {
+    return Axios.put(apiUrl, { interview }).then(() => {
       const updatedDays = state.days.map(day => {
-        return {...day, spots: day.name === state.day && !isEditingAppointment ? day.spots - 1 : day.spots}
+        return { ...day, spots: day.name === state.day && !isEditingAppointment ? day.spots - 1 : day.spots }
       });
-      setState({...state, appointments, days:updatedDays})
+      setState({ ...state, appointments, days: updatedDays })
     });
 
   };
@@ -54,11 +54,11 @@ export default function useApplicationData() {
     //count spots remaining
 
     const apiUrl = `/api/appointments/${id}`;
-    return Axios.delete (apiUrl).then(() => {
+    return Axios.delete(apiUrl).then(() => {
       const updatedDays = state.days.map(day => {
-        return {...day, spots: day.name === state.day ? day.spots + 1 : day.spots}
+        return { ...day, spots: day.name === state.day ? day.spots + 1 : day.spots }
       });
-      setState({...state, appointments, days:updatedDays})
+      setState({ ...state, appointments, days: updatedDays })
     });
   }
 
@@ -72,11 +72,9 @@ export default function useApplicationData() {
       Axios.get(appInfo),
       Axios.get(interviewerInfo)
     ]).then((all) => {
-      setState(prev => ({...prev, days:all[0].data, appointments:all[1].data, interviewers:all[2].data})); //we have to reference the state keys to update the state
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data })); //we have to reference the state keys to update the state
     })
   }, []);
 
-  return { state, setDay, bookInterview, cancelInterview}
-}
-
-//
+  return { state, setDay, bookInterview, cancelInterview }
+};
