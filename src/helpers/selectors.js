@@ -7,14 +7,7 @@ export function getAppointmentsForDay(state, dayName) {
     return [];
   }
 
-  const dayOfAppointment = day.appointments;
-
-  let appointmentInfo = [];
-
-  for (let id of dayOfAppointment) {
-    appointmentInfo.push(state.appointments[id]);
-  }
-  return appointmentInfo;
+  return day.appointments.map((id) => state.appointments[id]);
 }
 
 
